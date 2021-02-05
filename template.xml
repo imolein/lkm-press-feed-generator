@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title><%= title %></title>
+        <description><%= description %></description>
+        <link><%- url %></link>
+        <generator><%= generator %></generator>
+        <% if articles then %>
+            <% for _, article in ipairs(articles) do %>
+        <item>
+            <title><%= article.title %></title>
+            <description>
+            <% if article.content then %>
+              <%- article.content %>
+            <% end %>
+            </description>
+            <link><%- article.link %></link>
+            <% if article.date then %>
+            <pubDate><%= article.date %></pubDate>
+            <% end %>
+        </item>
+            <% end %>
+        <% end %>
+    </channel>
+</rss>
