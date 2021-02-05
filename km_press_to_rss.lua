@@ -15,7 +15,7 @@ local TEMPLATE_FILE = arg[1] or './template.xml'
 local OUT = arg[2] or './km_pressemitteilungen.xml'
 local LOG_FILE = arg[3] or './km_press_to_rss.log'
 
-http.USERAGENT = 'km_press_to_rss/0.0.0 (Bitte stellt einen RSS Feed bereit)'
+http.USERAGENT = 'km_press_to_rss/0.0.0 (https://codeberg.org/imo/km_press_to_rss / Bitte stellt selbst einen RSS Feed bereit)'
 
 
 local logfile_fh = assert(io.open(LOG_FILE, 'a'))

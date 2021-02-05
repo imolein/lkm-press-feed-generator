@@ -2,6 +2,12 @@
 
 Generiert einen RSS feed aus den Pressemitteilungen des Landkreis Meissen (http://www.kreis-meissen.org/61.html).
 
+Es gibt zwar ein paar Webservices die einen genau das machen lassen was im Grunde dieses Skript hier tut, allerdings funktionierten die freien Varianten davon meist nicht so wie ich es wollte oder mein Feedreader wollte nicht so richtig mit dem Ergebnis klar kommen. Außerdem hat man bei diesen Pressemitteilungen das Problem das diese außer dem Datum im Titel keinen anderen Zeitstempel haben und diese Webservices keine Möglichkeit boten diesen zu parsen.
+
+Also entstand dieses Skript. Vielleicht findet es irgendwer hilfreich.
+
+Schöner wäre es natürlich nenn RSS Feed auf der Seite zu haben. Fals das also hier jemand von der Pressestelle des Landsratamtes Meißen liest, bitte gebt uns einen RSS Feed! <3
+
 Feed Beispiel: https://kokolor.es/extern_rss/km_pressemitteilungen.xml
 
 ## Installation
