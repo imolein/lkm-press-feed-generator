@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
+        <atom:link href="https://kokolor.es/extern_rss/km_pressemitteilungen.xml" rel="self" type="application/rss+xml" />
         <title><%= title %></title>
         <description><%= description %></description>
         <link><%- url %></link>
@@ -15,6 +16,7 @@
             <% end %>
             </description>
             <link><%- article.link %></link>
+            <guid><%- article.link %></guid>
             <% if article.date then %>
             <pubDate><%= article.date %></pubDate>
             <% end %>
