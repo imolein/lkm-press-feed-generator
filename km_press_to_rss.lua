@@ -15,7 +15,7 @@ local TEMPLATE_FILE = arg[1] or './template.xml'
 local OUT = arg[2] or './km_pressemitteilungen.xml'
 local LOG_FILE = arg[3] or './km_press_to_rss.log'
 
-http.USERAGENT = 'km_press_to_rss/0.0.0 (https://codeberg.org/imo/km_press_to_rss / Bitte stellt selbst einen RSS Feed bereit)'
+http.USERAGENT = 'km_press_to_rss/0.0.1 (https://codeberg.org/imo/km_press_to_rss / Bitte stellt selbst einen RSS Feed bereit)'
 
 
 local logfile_fh = assert(io.open(LOG_FILE, 'a'))
@@ -37,12 +37,13 @@ local function get_articles(parsed, data)
     for _, element in ipairs(parsed:select('div.inhaltsbereich-box')) do
         local title = element:select('div.border_o_r > h2')[1]:getcontent()
         local rfc_date = rfc_822_date_time({ title:match('^(%d+)%.(%d+)%.(%d+)%s+.*$') })
+        local p_element = element:select('p')[1]
 
         logger('info', 'Found article %q', title)
 
         table.insert(data.articles, {
             title = title,
-            content = element:select('p')[1]:getcontent():gsub('&nbsp;', ' '),
+            content = p_element and p_element:getcontent():gsub('&nbsp;', ' '),
             link = URL .. element:select('a')[1].attributes.href,
             date = rfc_date
         })
