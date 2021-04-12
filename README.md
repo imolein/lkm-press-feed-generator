@@ -52,12 +52,5 @@ km_press_to_rss.lua
 
 Führt man das Skript ohne Argumente aus, geht es davon aus die `template.xml` im derzeitigen Verzeichnis zu finden und schreibt auch das Ergebnis, sowie die Logdatei in dieses. Dem Skript können aber drei Argumente übergeben werden um dieses Verhalten zu ändern:
 ```
-km_press_to_rss.lua template.xml output.rss log.log
+km_press_to_rss.lua -t template.xml -o output.rss -l log.log
 ```
-
-**Hinweis**: Das Skript parsed keine Argumente. Sieht es argument 1, setzt es dieses, egal was es ist, was dann natürlich dazu führt das das Skript fehlschlägt.
-Bsp.:
-```
-km_press_to_rss.lua log.log
-```
-Würde dazu führen das das Skript versucht eine Datei `log.log` als Template für den RSS Feed zu laden. Wenn man Argumente angibt sollte man also besser alle angeben.

@@ -10,14 +10,43 @@ local date = require('date')
 local URL = 'http://www.kreis-meissen.org'
 local DESC = 'RSS Feed der Pressemitteilungen Kreis Meißen.'
 local GEN = 'km_press_to_rss.lua'
+local VER = '0.0.3'
 
-local TEMPLATE_FILE = arg[1] or './template.xml'
-local OUT = arg[2] or './km_pressemitteilungen.xml'
-local LOG_FILE = arg[3] or './km_press_to_rss.log'
-
-http.USERAGENT = 'km_press_to_rss/0.0.2 (https://codeberg.org/imo/km_press_to_rss / Bitte stellt selbst einen RSS Feed bereit)'
+http.USERAGENT = string.format(
+    '%s/%s (https://codeberg.org/imo/km_press_to_rss / Bitte stellt selbst einen RSS Feed bereit)',
+    GEN,
+    VER
+)
 
 math.randomseed(os.time())
+
+
+local TEMPLATE_FILE, OUT, LOG_FILE do
+    for idx, opt in pairs(arg) do
+        if opt == '-o' then
+            OUT = arg[idx + 1]
+        elseif opt == '-t' then
+            TEMPLATE_FILE = arg[idx + 1]
+        elseif opt == '-l' then
+            LOG_FILE = arg[idx + 1]
+        elseif opt == '-h' then
+            io.write(string.format(
+                '%s v%s\n\n' ..
+                '    -h    this message\n' ..
+                '    -l    path to log file (default: "./km_press_to_rss.log")\n' ..
+                '    -o    path to output file (default: "./km_pressemitteilungen.xml")\n' ..
+                '    -t    path to template.xml (default: "./template.xml")\n',
+                GEN,
+                VER
+            ))
+            os.exit(0)
+        end
+    end
+
+    TEMPLATE_FILE = TEMPLATE_FILE or './template.xml'
+    OUT =           OUT or './km_pressemitteilungen.xml'
+    LOG_FILE =      LOG_FILE or './km_press_to_rss.log'
+end
 
 local logfile_fh = assert(io.open(LOG_FILE, 'a'))
 local function logger(level, msg, fmt)
