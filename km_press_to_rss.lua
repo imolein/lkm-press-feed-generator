@@ -15,12 +15,23 @@ local TEMPLATE_FILE = arg[1] or './template.xml'
 local OUT = arg[2] or './km_pressemitteilungen.xml'
 local LOG_FILE = arg[3] or './km_press_to_rss.log'
 
-http.USERAGENT = 'km_press_to_rss/0.0.1 (https://codeberg.org/imo/km_press_to_rss / Bitte stellt selbst einen RSS Feed bereit)'
+http.USERAGENT = 'km_press_to_rss/0.0.2 (https://codeberg.org/imo/km_press_to_rss / Bitte stellt selbst einen RSS Feed bereit)'
 
+math.randomseed(os.time())
 
 local logfile_fh = assert(io.open(LOG_FILE, 'a'))
 local function logger(level, msg, fmt)
     logfile_fh:write(('%s %s - %s\n'):format(os.date(nil, os.time()), level:upper(), msg:format(fmt)))
+end
+
+-- generiert eine UUID4
+local function generate_uuid4()
+    local tmpl = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+
+    return (tmpl:gsub('[xy]', function(c)
+        local v = c == 'x' and math.random(0, 0xf) or math.random(8, 0xb)
+        return ('%x'):format(v)
+    end))
 end
 
 -- generiert vom Datum aus dem Titel einen rfc-822 date time string
@@ -44,8 +55,9 @@ local function get_articles(parsed, data)
         table.insert(data.articles, {
             title = title,
             content = p_element and p_element:getcontent():gsub('&nbsp;', ' '),
-            link = URL .. element:select('a')[1].attributes.href,
-            date = rfc_date
+            link = URL .. element:select('div > a')[1].attributes.href,
+            date = rfc_date,
+            guid = generate_uuid4()
         })
     end
 

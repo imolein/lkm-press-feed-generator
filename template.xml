@@ -16,7 +16,7 @@
             <% end %>
             </description>
             <link><%- article.link %></link>
-            <guid><%- article.link %></guid>
+            <guid isPermaLink="false"><%- article.guid %></guid>
             <% if article.date then %>
             <pubDate><%= article.date %></pubDate>
             <% end %>
