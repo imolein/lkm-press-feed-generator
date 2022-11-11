@@ -12,6 +12,7 @@ description = {
 dependencies = {
     "lua >= 5.1, < 5.5",
     "luasocket",
+    "luasec",
     "htmlparser",
     "etlua",
     "date"

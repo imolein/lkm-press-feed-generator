@@ -7,10 +7,10 @@ local htmlparser = require('htmlparser')
 local etlua = require('etlua')
 local date = require('date')
 
-local URL = 'http://www.kreis-meissen.org'
+local URL = 'https://www.kreis-meissen.de'
 local DESC = 'RSS Feed der Pressemitteilungen Kreis Meißen.'
 local GEN = 'km_press_to_rss.lua'
-local VER = '0.0.3'
+local VER = '0.0.4'
 
 http.USERAGENT = string.format(
     '%s/%s (https://codeberg.org/imo/km_press_to_rss / Bitte stellt selbst einen RSS Feed bereit)',
@@ -65,26 +65,32 @@ end
 
 -- generiert vom Datum aus dem Titel einen rfc-822 date time string
 local function rfc_822_date_time(raw)
-    local ok, date_obj = pcall(date, raw[3], raw[2], raw[1])
+    local ok, date_obj = pcall(date, raw)
 
     if not ok then return end
 
     return date_obj:fmt('%a, %d %b %Y %T %z')
 end
 
+-- removed leading new lines and spaces and trailing html from text
+local function normalize_text(raw)
+    return raw:match('^[\n%s]*(.+%.%.%.)%s+<span.*$')
+end
+
 -- erstellt für jeden Artikel eine table und fügt diese data.articles hinzu
 local function get_articles(parsed, data)
-    for _, element in ipairs(parsed:select('div.inhaltsbereich-box')) do
-        local title = element:select('div.border_o_r > h2')[1]:getcontent()
-        local rfc_date = rfc_822_date_time({ title:match('^(%d+)%.(%d+)%.(%d+)%s+.*$') })
-        local p_element = element:select('p')[1]
+    for _, element in ipairs(parsed:select('ul#liste_1 > li')) do
+        local a = element:select('a:not([class])')[1]
+        local title = a.attributes.title
+        local rfc_date = rfc_822_date_time(element:select('time')[1].attributes.datetime)
+        local p_element = element:select('p:not([class])')[1]
 
         logger('info', 'Found article %q', title)
 
         table.insert(data.articles, {
             title = title,
-            content = p_element and p_element:getcontent():gsub('&nbsp;', ' '),
-            link = URL .. element:select('div > a')[1].attributes.href,
+            content = p_element and normalize_text(p_element:getcontent()),
+            link = URL .. a.attributes.href,
             date = rfc_date,
             guid = generate_uuid4()
         })
@@ -105,8 +111,8 @@ local function parse_html(raw_html)
     logger('info', 'Successful parsed raw HTML, now picking needed data out of it')
 
     local data = {
-        title = parsed:select('title')[1]:getcontent(),
-        url = URL .. '/61.html',
+        title = 'Landkreis Meißen - Pressemitteilungen',
+        url = URL .. '/Aktuelles/Pressemitteilungen/',
         description = DESC,
         generator = GEN,
         articles = {}
@@ -117,7 +123,9 @@ end
 
 -- holt die Pressemitteilungswebseite
 local function get_data_from_url()
-    local data, code = http.request(URL.. '/61.html')
+    local data, code = http.request(
+        URL ..'/Aktuelles/Pressemitteilungen/index.php?ModID=255&object=tx%2C3697.5.1&La=1&NavID=3697.12&text=&kat=3697.1031&monat=&jahr=&kuo=1&max=20'
+    )
 
     if code ~= 200 then
         logger('error', 'Failed to receive website')
