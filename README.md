@@ -8,6 +8,17 @@ Also entstand dieses Skript. Vielleicht findet es irgendwer hilfreich.
 
 Schöner wäre es natürlich nenn RSS Feed auf der Seite zu haben. Falls das also hier jemand von der Pressestelle des Landsratamtes Meißen liest, bitte gebt uns einen RSS Feed! <3
 
+### Update zum Status eines RSS Feed's auf der Seite selbst
+Nachdem die Seite Ende 2022 modernisiert wurde, habe ich Kontakt mit der Pressestelle aufgenommen, um zu erfahren ob es nun einen RSS/Atom Feed gibt, welcher einfach nicht verlinkt ist oder ob sie planen noch einen bereit zu stellen. Die Antwort sah wie folgt aus:
+```
+vielen Dank für Ihre Nachricht und Ihrem Interesse an unseren Pressemitteilungen. Leider muss ich Ihnen
+mitteilen, dass wir uns auch bei der neuen Website gegen einen RSS Feed entschieden haben. Wir gehen
+davon aus, dass der Gebrauch von RSS Feeds durch die sozialen Medien mittlerweile überholt ist. Wir
+versuchen immer die wichtigsten Meldungen über unsere Social Media Kanäle zu veröffentlichen, durch das
+Folgen dieser sind Sie meist auf dem aktuellen Stand. Auch unangemeldet können Sie die Posts einsehen.
+```
+Meine Antwort, in welcher ich unter anderem die Vorteile von RSS erklärte (sowohl vom Datenschutz her, als auch von der Usability), als auch auch über alternative soziale Medien aufklärte, blieb leider bis heute unbeantwortet. D.h. einen RSS Feed wird es sobald nicht geben. Man kann nur hoffen das die sächsische Datenschutzbeauftrage die [Abschaltung der behördlichen Facebook-Auftritte](https://www.mdr.de/nachrichten/sachsen/politik/staedte-facebook-seiten-abschaltung-datenschutz-behoerde-100.html) durch bekommt und dann womöglich ein Umdenken stattfindet. Natürlich erst nachdem sie, vom Weinkrampf geschüttelt, den Datenschutz dafür verantwortlich machen das Bürger sich jetzt angeblich nicht mehr informieren können, nur um davon abzulenken das sie mindestens ein Jahrzehnt lang schlichtweg Alternativen ignoriert haben.
+
 Feed Beispiel: https://kokolor.es/extern_rss/km_pressemitteilungen.xml
 
 ## Installation
