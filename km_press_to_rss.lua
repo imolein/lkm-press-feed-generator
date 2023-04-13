@@ -10,15 +10,13 @@ local date = require('date')
 local URL = 'https://www.kreis-meissen.de'
 local DESC = 'RSS Feed der Pressemitteilungen Kreis Meißen.'
 local GEN = 'km_press_to_rss.lua'
-local VER = '0.0.4'
+local VER = '0.0.5'
 
 http.USERAGENT = string.format(
     '%s/%s (https://codeberg.org/imo/km_press_to_rss / Bitte stellt selbst einen RSS Feed bereit)',
     GEN,
     VER
 )
-
-math.randomseed(os.time())
 
 
 local TEMPLATE_FILE, OUT, LOG_FILE do
@@ -53,16 +51,6 @@ local function logger(level, msg, fmt)
     logfile_fh:write(('%s %s - %s\n'):format(os.date(nil, os.time()), level:upper(), msg:format(fmt)))
 end
 
--- generiert eine UUID4
-local function generate_uuid4()
-    local tmpl = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-
-    return (tmpl:gsub('[xy]', function(c)
-        local v = c == 'x' and math.random(0, 0xf) or math.random(8, 0xb)
-        return ('%x'):format(v)
-    end))
-end
-
 -- generiert vom Datum aus dem Titel einen rfc-822 date time string
 local function rfc_822_date_time(raw)
     local ok, date_obj = pcall(date, raw)
@@ -91,8 +79,7 @@ local function get_articles(parsed, data)
             title = title,
             content = p_element and normalize_text(p_element:getcontent()),
             link = URL .. a.attributes.href,
-            date = rfc_date,
-            guid = generate_uuid4()
+            date = rfc_date
         })
     end
 
