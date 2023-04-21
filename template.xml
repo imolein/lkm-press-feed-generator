@@ -4,8 +4,10 @@
         <atom:link href="https://kokolor.es/extern_rss/km_pressemitteilungen.xml" rel="self" type="application/rss+xml" />
         <title><%= title %></title>
         <description><%= description %></description>
+        <language>de-de</language>
         <link><%- url %></link>
         <generator><%= generator %></generator>
+        <lastBuildDate><%= build_date %></lastBuildDate>
         <% if articles then %>
             <% for _, article in ipairs(articles) do %>
         <item>

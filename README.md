@@ -1,4 +1,4 @@
-# km_press_to_rss
+# lkm-press-feed-generator
 
 Generiert einen RSS feed aus den Pressemitteilungen des Landkreis Meissen (https://www.kreis-meissen.de/Aktuelles/Pressemitteilungen).
 
@@ -25,20 +25,23 @@ Feed Beispiel: https://kokolor.es/extern_rss/km_pressemitteilungen.xml
 
 ### Abhängigkeiten
 
-* [Lua](https://lua.org) (>= 5.1)
+* [Lua](https://lua.org) (>= 5.1) und/oder [Fennel](https://fennel-lang.org/) (>= 1.3.0)
 * [luasocket](https://github.com/diegonehab/luasocket)
 * [luasec](https://github.com/brunoos/luasec)
 * [lua-htmlparser](https://github.com/msva/lua-htmlparser)
+* [htmlEntities](https://github.com/TiagoDanin/htmlEntities-for-lua)
 * [etlua](https://github.com/leafo/etlua)
 * [date](https://github.com/Tieske/date)
 
 ### Mit Luarocks
 
-* Lua installieren - entweder aus dem [Quellcode](https://www.lua.org/download.html) selbst bauen oder über den Paketmanager eures Betriebssystems installieren
+* Lua und/oder Fennel installieren
+   * Lua: Entweder aus dem [Quellcode](https://www.lua.org/download.html) selbst bauen oder über den Paketmanager eures Betriebssystems installieren
+   * Fennel: Es gibt verschiedene Arten [Fennel zu installieren](https://fennel-lang.org/setup#downloading-fennel)
 * [Luarocks installieren](https://github.com/luarocks/luarocks/wiki/Installation-instructions-for-Unix)
 * Skript mit luarocks installieren:
 ```
-luarocks install https://codeberg.org/imo/km_press_to_rss/raw/branch/main/km_press_to_rss-dev-1.rockspec
+luarocks install https://codeberg.org/imo/lkm-press-feed-generator/raw/branch/main/lkm-press-feed-generator-dev-1.rockspec
 ```
 
 ### Manuell
@@ -49,7 +52,7 @@ Erst einmal cloned man dieses Repository. Für Lua und LuaSocket gibt es in viel
 
 Wurde das Skript mit Luarocks installiert, kann man auf der Konsole folgendes eingeben:
 ```
-km_press_to_rss
+lkm-press-feed-generator
 ```
 Denn luarocks installiert das Skript in der Regel in einen Ordner, der sich in der Variable `$PATH` befindet.
 
@@ -57,12 +60,16 @@ Denn luarocks installiert das Skript in der Regel in einen Ordner, der sich in d
 
 Wurde das Skript manuell installiert, führt man es direkt aus dem Ordner aus:
 ```
-km_press_to_rss.lua
+lua lkm-press-feed-generator.lua
+```
+oder
+```
+fennel lkm-press-feed-generator.fnl
 ```
 
 ---
 
 Führt man das Skript ohne Argumente aus, geht es davon aus die `template.xml` im derzeitigen Verzeichnis zu finden und schreibt auch das Ergebnis, sowie die Logdatei in dieses. Dem Skript können aber drei Argumente übergeben werden um dieses Verhalten zu ändern:
 ```
-km_press_to_rss.lua -t template.xml -o output.rss -l log.log
+fennel lkm-press-feed-generator.fnl -t template.xml -o output.rss -l log.log
 ```
